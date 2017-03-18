@@ -15,6 +15,8 @@
 		269D27301E7CC58D00C83473 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 269D272E1E7CC58D00C83473 /* LaunchScreen.storyboard */; };
 		269D273B1E7CC58D00C83473 /* JXFlowCollectionViewTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 269D273A1E7CC58D00C83473 /* JXFlowCollectionViewTests.m */; };
 		269D27461E7CC58D00C83473 /* JXFlowCollectionViewUITests.m in Sources */ = {isa = PBXBuildFile; fileRef = 269D27451E7CC58D00C83473 /* JXFlowCollectionViewUITests.m */; };
+		269D27551E7CC73D00C83473 /* JXFlowView.m in Sources */ = {isa = PBXBuildFile; fileRef = 269D27541E7CC73D00C83473 /* JXFlowView.m */; };
+		269D27581E7CC9AD00C83473 /* JXFlowViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 269D27571E7CC9AD00C83473 /* JXFlowViewCell.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -51,6 +53,10 @@
 		269D27411E7CC58D00C83473 /* JXFlowCollectionViewUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = JXFlowCollectionViewUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		269D27451E7CC58D00C83473 /* JXFlowCollectionViewUITests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = JXFlowCollectionViewUITests.m; sourceTree = "<group>"; };
 		269D27471E7CC58D00C83473 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		269D27531E7CC73D00C83473 /* JXFlowView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JXFlowView.h; sourceTree = "<group>"; };
+		269D27541E7CC73D00C83473 /* JXFlowView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JXFlowView.m; sourceTree = "<group>"; };
+		269D27561E7CC9AD00C83473 /* JXFlowViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JXFlowViewCell.h; sourceTree = "<group>"; };
+		269D27571E7CC9AD00C83473 /* JXFlowViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JXFlowViewCell.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -105,6 +111,10 @@
 				269D27241E7CC58D00C83473 /* AppDelegate.m */,
 				269D27261E7CC58D00C83473 /* ViewController.h */,
 				269D27271E7CC58D00C83473 /* ViewController.m */,
+				269D27531E7CC73D00C83473 /* JXFlowView.h */,
+				269D27541E7CC73D00C83473 /* JXFlowView.m */,
+				269D27561E7CC9AD00C83473 /* JXFlowViewCell.h */,
+				269D27571E7CC9AD00C83473 /* JXFlowViewCell.m */,
 				269D27291E7CC58D00C83473 /* Main.storyboard */,
 				269D272C1E7CC58D00C83473 /* Assets.xcassets */,
 				269D272E1E7CC58D00C83473 /* LaunchScreen.storyboard */,
@@ -273,7 +283,9 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				269D27551E7CC73D00C83473 /* JXFlowView.m in Sources */,
 				269D27281E7CC58D00C83473 /* ViewController.m in Sources */,
+				269D27581E7CC9AD00C83473 /* JXFlowViewCell.m in Sources */,
 				269D27251E7CC58D00C83473 /* AppDelegate.m in Sources */,
 				269D27221E7CC58D00C83473 /* main.m in Sources */,
 			);
@@ -505,6 +517,7 @@
 				269D274C1E7CC58D00C83473 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		269D274D1E7CC58D00C83473 /* Build configuration list for PBXNativeTarget "JXFlowCollectionViewTests" */ = {
 			isa = XCConfigurationList;
@@ -513,6 +526,7 @@
 				269D274F1E7CC58D00C83473 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		269D27501E7CC58D00C83473 /* Build configuration list for PBXNativeTarget "JXFlowCollectionViewUITests" */ = {
 			isa = XCConfigurationList;
@@ -521,6 +535,7 @@
 				269D27521E7CC58D00C83473 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};
