@@ -58,4 +58,6 @@ typedef NS_ENUM(NSUInteger, JXFlowViewMarginType) {
 @property (nonatomic,weak) id<JXFlowViewDataSource> jx_dataSource;
 /** 代理方法 */
 @property (nonatomic,weak) id<JXFlowViewDelegate> jx_delegate;
+// 刷新数据
+- (void)reloadData;
 @end

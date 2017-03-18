@@ -7,8 +7,10 @@
 //
 
 #import "ViewController.h"
+#import "JXFlowView.h"
+#import "JXFlowViewCell.h"
 
-@interface ViewController ()
+@interface ViewController ()<JXFlowViewDelegate,JXFlowViewDataSource>
 
 @end
 
@@ -16,14 +18,47 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    // Do any additional setup after loading the view, typically from a nib.
+    
+    
+    JXFlowView *flowView = [[JXFlowView alloc] init];
+    flowView.jx_delegate = self;
+    flowView.jx_dataSource = self;
+    flowView.frame = self.view.bounds;
+    [self.view addSubview:flowView];
+    
+    [flowView reloadData];
+    
+}
+
+/////// 代理方法
+- (NSUInteger)numberOfCellsInFlowView:(JXFlowView *)flowView {
+    return 100;
+}
+
+- (NSUInteger)numberOfColumunsInFlowView:(JXFlowView *)flowView {
+    return 4;
+}
+
+- (JXFlowViewCell *)flowView:(JXFlowView *)flowView cellAtIndex:(NSUInteger)index {
+    JXFlowViewCell *cell = [[JXFlowViewCell alloc] init];
+    cell.backgroundColor = [UIColor redColor];
+    return cell;
+}
+
+- (CGFloat)flowView:(JXFlowView *)flowView heightAtIndex:(NSUInteger)index {
+    if (index % 3) return 100.0f;
+    return 70.0f;
 }
 
 
-- (void)didReceiveMemoryWarning {
-    [super didReceiveMemoryWarning];
-    // Dispose of any resources that can be recreated.
+- (CGFloat)flowView:(JXFlowView *)flowView marginForType:(JXFlowViewMarginType)type {
+    switch (type) {
+        case JXFlowViewMarginTypeRow:
+            return 10.0f;
+            break;
+        default:
+            return 10.0f;
+            break;
+    }
 }
-
-
 @end
