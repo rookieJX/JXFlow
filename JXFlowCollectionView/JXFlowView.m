@@ -19,6 +19,10 @@
 @interface JXFlowView ()
 /** 每个cell的frame */
 @property (nonatomic,strong) NSMutableArray * cellFrames;
+/** 正在展示的cell */
+@property (nonatomic,strong) NSMutableDictionary * displayCells;
+/** 缓存池 */
+@property (nonatomic,strong) NSMutableSet * reusableCells;
 @end
 
 @implementation JXFlowView
@@ -94,7 +98,88 @@
     
 }
 
+
+#pragma mark - 布局
+- (void)layoutSubviews {
+    [super layoutSubviews];
+    
+    // 根据数据源来返回cell
+    NSUInteger numberOfCells = self.cellFrames.count;
+    for (NSInteger i=0; i<numberOfCells; i++) {
+        CGRect frame = [self.cellFrames[i] CGRectValue];
+        
+        // 字典中取出cell
+        JXFlowViewCell *cell = self.displayCells[@(i)];
+        // 判断是否在屏幕上
+        if ([self isInScreen:frame]) {
+            
+            if (cell == nil) { // 如果暂无cell,创建
+                cell = [self.jx_dataSource flowView:self cellAtIndex:i];
+                cell.frame = frame;
+                [self addSubview:cell];
+                
+                // 存放到字典中
+                self.displayCells[@(i)] = cell;
+            }
+            
+        } else {
+            
+            if (cell) {
+                [cell removeFromSuperview];
+                [self.displayCells removeObjectForKey:@(i)];
+                [self.reusableCells addObject:cell];
+            }
+        }
+        
+    }
+}
+
+- (id)dequeueReusableCellWithIdentifier:(NSString *)reusal {
+    __block JXFlowViewCell *reusablaCell = nil;
+    [self.reusableCells enumerateObjectsUsingBlock:^(JXFlowViewCell *cell, BOOL * _Nonnull stop) {
+        if ([cell.identifier isEqualToString:reusal]) {
+            reusablaCell = cell;
+            *stop = YES;
+        }
+    }];
+    
+    // 如果存在就移除
+    if (reusablaCell) {
+        [self.reusableCells removeObject:reusablaCell];
+    }
+    
+    return reusablaCell;
+    
+}
+
+#pragma mark - 触摸方法
+- (void)touchesBegan:(NSSet<UITouch *> *)touches withEvent:(UIEvent *)event {
+    
+    if (!(self.jx_delegate && [self.jx_delegate respondsToSelector:@selector(flowView:didSelectAtIndex:)])) return;
+    
+    UITouch *touch = [touches anyObject];
+    CGPoint point = [touch locationInView:self];
+    
+    // 遍历当前在屏幕上的控件
+    __block NSNumber *selectIndex = nil;
+    [self.displayCells enumerateKeysAndObjectsUsingBlock:^(id  _Nonnull key, JXFlowViewCell *cell, BOOL * _Nonnull stop) {
+        // 如果包含点
+        if (CGRectContainsPoint(cell.frame, point)) {
+            selectIndex = key;
+            *stop = YES;
+        }
+    }];
+    
+    if (selectIndex) {
+        [self.jx_delegate flowView:self didSelectAtIndex:selectIndex.unsignedIntegerValue];
+    }
+}
 #pragma mark - 私有方法
+// 根据一个frame返回是否在屏幕上
+- (BOOL)isInScreen:(CGRect)frame {
+    return (CGRectGetMaxY(frame) > self.contentOffset.y) &&
+    (CGRectGetMaxY(frame) < self.contentOffset.y + self.frame.size.height);
+}
 // 返回cell高度
 - (CGFloat)heightAtIndex:(NSUInteger)index {
     CGFloat cellH = kJXFlowViewCellDefaultH;
@@ -129,5 +214,17 @@
     return _cellFrames;
 }
 
+- (NSMutableDictionary *)displayCells{
+    if (_displayCells == nil) {
+        _displayCells = [[NSMutableDictionary alloc] init];
+    }
+    return _displayCells ;
+}
 
+- (NSMutableSet *)reusableCells{
+    if (_reusableCells == nil) {
+        _reusableCells = [[NSMutableSet alloc] init];
+    }
+    return _reusableCells;
+}
 @end

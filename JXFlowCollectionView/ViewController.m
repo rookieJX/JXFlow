@@ -40,7 +40,13 @@
 }
 
 - (JXFlowViewCell *)flowView:(JXFlowView *)flowView cellAtIndex:(NSUInteger)index {
-    JXFlowViewCell *cell = [[JXFlowViewCell alloc] init];
+    static NSString *identifier = @"cell";
+    
+    JXFlowViewCell *cell = [flowView dequeueReusableCellWithIdentifier:identifier];
+    if (cell == nil) {
+        cell = [[JXFlowViewCell alloc] init];
+        cell.identifier = identifier;
+    }
     cell.backgroundColor = [UIColor redColor];
     return cell;
 }
@@ -60,5 +66,9 @@
             return 10.0f;
             break;
     }
+}
+
+- (void)flowView:(JXFlowView *)flowView didSelectAtIndex:(NSUInteger)index {
+    NSLog(@"点击了--%ld",index);
 }
 @end

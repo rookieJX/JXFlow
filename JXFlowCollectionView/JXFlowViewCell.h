@@ -9,5 +9,6 @@
 #import <UIKit/UIKit.h>
 
 @interface JXFlowViewCell : UIView
-
+/** 重用标识 */
+@property (nonatomic,copy) NSString * identifier;
 @end

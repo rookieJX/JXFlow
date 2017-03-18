@@ -60,4 +60,6 @@ typedef NS_ENUM(NSUInteger, JXFlowViewMarginType) {
 @property (nonatomic,weak) id<JXFlowViewDelegate> jx_delegate;
 // 刷新数据
 - (void)reloadData;
+// 根据表示来加载可用cell
+- (id)dequeueReusableCellWithIdentifier:(NSString *)reusal;
 @end
