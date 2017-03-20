@@ -28,6 +28,14 @@
 @implementation JXFlowView
 
 - (void)reloadData {
+    
+    // 清空之前所有的cell
+    // 移除正在显示的cell
+    [self.displayCells.allValues makeObjectsPerformSelector:@selector(removeFromSuperview)];
+    [self.displayCells removeAllObjects];
+    [self.cellFrames removeAllObjects];
+    [self.reusableCells removeAllObjects];
+    
     // cell总数
     NSInteger cells = [self.jx_dataSource numberOfCellsInFlowView:self];
     
@@ -38,12 +46,11 @@
     CGFloat cellMarignTop = [self cellMarginForType:JXFlowViewMarginTypeTop];
     CGFloat cellMarginBottom = [self cellMarginForType:JXFlowViewMarginTypeBottom];
     CGFloat cellMarignLeft = [self cellMarginForType:JXFlowViewMarginTypeLeft];
-    CGFloat cellMarignRight = [self cellMarginForType:JXFlowViewMarginTypeRight];
     CGFloat cellMarignCol = [self cellMarginForType:JXFlowViewMarginTypeColumn];
     CGFloat cellMarignRow = [self cellMarginForType:JXFlowViewMarginTypeRow];
     
     // cell宽度
-    CGFloat cellW = (self.frame.size.width - cellMarignLeft - cellMarignRight - (columns - 1) * cellMarignCol) / columns;
+    CGFloat cellW = [self cellWidth];
     
     // 用一个C代码来存放最大的Y值
     CGFloat maxYOfColumns[columns];
@@ -98,6 +105,24 @@
     
 }
 
+// 将要显示在屏幕上
+- (void)willMoveToSuperview:(UIView *)newSuperview {
+    [self reloadData];
+}
+
+// 返回cell宽度
+- (CGFloat)cellWidth {
+    
+    // cell总列数
+    NSInteger columns = [self columns];
+    
+    // 间距
+    CGFloat cellMarignLeft = [self cellMarginForType:JXFlowViewMarginTypeLeft];
+    CGFloat cellMarignRight = [self cellMarginForType:JXFlowViewMarginTypeRight];
+    CGFloat cellMarignCol = [self cellMarginForType:JXFlowViewMarginTypeColumn];
+    
+    return (self.frame.size.width - cellMarignLeft - cellMarignRight - (columns - 1) * cellMarignCol) / columns;
+}
 
 #pragma mark - 布局
 - (void)layoutSubviews {

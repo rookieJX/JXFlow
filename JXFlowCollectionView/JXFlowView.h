@@ -62,4 +62,6 @@ typedef NS_ENUM(NSUInteger, JXFlowViewMarginType) {
 - (void)reloadData;
 // 根据表示来加载可用cell
 - (id)dequeueReusableCellWithIdentifier:(NSString *)reusal;
+// 返回cell宽度
+- (CGFloat)cellWidth;
 @end
